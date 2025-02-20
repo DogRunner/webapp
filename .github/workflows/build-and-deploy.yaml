@@ -52,27 +52,27 @@ jobs:
         uses: actions/setup-node@v4.2.0
         with:
           node-version: 20.14.0 # https://github.com/actions/node-versions/releases
-          cache: npm
-  
+          cache: yarn
+
       - name: Dependency Install
-        run: npm ci
+        run: yarn install --frozen-lockfile # npm ci
 
       - name: Run ESLint
-        run: npm run lint # 静的解析
+        run: yarn lint # npm run lint # 静的解析
 
       - name: Run Prettier
-        run: npm run format
+        run: yarn format # npm run format
 
       - name: Cache Next.js Build Output
         uses: actions/cache@v4.2.0
         with:
           path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock', '**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-
 
       - name: Build
-        run: npm run build
+        run: yarn build # npm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4.0.2
