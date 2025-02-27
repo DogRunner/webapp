@@ -71,6 +71,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-
 
+      - name: Create .env file
+        run: |
+          echo "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}" >> .env
+          echo "NEXT_PUBLIC_GOOGLE_MAP_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_MAP_ID }}" >> .env
+
+      # TODO: 削除予定
+      - name: Verify .env file
+        run: cat .env
+
       - name: Build
         run: yarn build # npm run build
 
